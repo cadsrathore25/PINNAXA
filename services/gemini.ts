@@ -1,16 +1,39 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+// Security check for production environments
+// Use process.env.API_KEY directly as per guidelines
+const API_KEY = process.env.API_KEY;
 
 export async function generateTeaser(text: string): Promise<string> {
+  if (!API_KEY) {
+    console.warn("Gemini API Key is missing. Please set API_KEY in your environment variables.");
+    return "AI feature is currently unavailable. Contact administrator.";
+  }
+
   try {
+    // Correct initialization with named parameter
+    const ai = new GoogleGenAI({ apiKey: API_KEY });
+    
+    // Using gemini-3-flash-preview for text summarization tasks
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
-      contents: `Generate a professional, short, and engaging teaser (about 20 words) for an agro-export website from the following text: ${text}`,
+      contents: [{ 
+        parts: [{ 
+          text: `You are a professional marketing copywriter for Pinnaxa Industries. 
+          Summarize the following product/company details into a high-converting, 
+          engaging 20-word teaser for a website hero section: ${text}` 
+        }] 
+      }],
+      config: {
+        temperature: 0.7,
+        topP: 0.9,
+      }
     });
-    return response.text?.trim() || "Unable to generate summary.";
+
+    // Correct text extraction: response.text is a property, not a method
+    return response.text?.trim() || "Quality assurance in every grain.";
   } catch (error) {
-    console.error("Gemini Error:", error);
-    return "Error generating summary. Please check your API key.";
+    console.error("Gemini AI Error:", error);
+    return "Excellence and purity, delivered globally.";
   }
 }

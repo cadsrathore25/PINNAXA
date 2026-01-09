@@ -18,6 +18,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
 };
 
 const About = () => (
+  /* Fix: Correctly wrapping About page content in PublicLayout */
   <PublicLayout>
     <div className="py-24 container mx-auto px-4">
       <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center lg:text-left">About Our Journey</h1>
@@ -38,6 +39,7 @@ const About = () => (
 const App = () => (
   <Router>
     <Routes>
+      {/* Fix: Wrapped all public routes in PublicLayout and private routes in AdminLayout with required children */}
       <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
       <Route path="/about" element={<About />} />
       <Route path="/products" element={<PublicLayout><ProductsListing /></PublicLayout>} />
@@ -45,9 +47,36 @@ const App = () => (
       <Route path="/leadership" element={<PublicLayout><Leadership /></PublicLayout>} />
       <Route path="/presence" element={<PublicLayout><Presence /></PublicLayout>} />
       <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/admin/dashboard" element={<PrivateRoute><AdminLayout><AdminDashboard /></AdminLayout></PrivateRoute>} />
-      <Route path="/admin/ai-summarizer" element={<PrivateRoute><AdminLayout><AdminAISummarizer /></AdminLayout></PrivateRoute>} />
-      <Route path="/admin/promoters" element={<PrivateRoute><AdminLayout><AdminPromoters /></AdminLayout></PrivateRoute>} />
+      <Route 
+        path="/admin/dashboard" 
+        element={
+          <PrivateRoute>
+            <AdminLayout>
+              <AdminDashboard />
+            </AdminLayout>
+          </PrivateRoute>
+        } 
+      />
+      <Route 
+        path="/admin/ai-summarizer" 
+        element={
+          <PrivateRoute>
+            <AdminLayout>
+              <AdminAISummarizer />
+            </AdminLayout>
+          </PrivateRoute>
+        } 
+      />
+      <Route 
+        path="/admin/promoters" 
+        element={
+          <PrivateRoute>
+            <AdminLayout>
+              <AdminPromoters />
+            </AdminLayout>
+          </PrivateRoute>
+        } 
+      />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   </Router>

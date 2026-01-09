@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, Leaf, Mail, Phone, MapPin, MessageSquare, Globe } from 'lucide-react';
+import { Menu, X, Leaf, Mail, Phone, MapPin, MessageSquare, Globe, LogIn } from 'lucide-react';
 import { BRAND_NAME, CONTACT_INFO, COMPANY_NAME } from '../constants';
 
 const Header = () => {
@@ -16,15 +16,16 @@ const Header = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
+    <header className="sticky top-0 z-[50] bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 group">
+        <Link to="/" className="flex items-center gap-2 group" onClick={() => setIsMenuOpen(false)}>
           <div className="bg-primary p-1.5 rounded-lg group-hover:rotate-12 transition-transform">
             <Leaf className="w-6 h-6 text-white" />
           </div>
           <span className="text-2xl font-bold tracking-tight text-primary-dark">{BRAND_NAME}</span>
         </Link>
 
+        {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-8 font-medium">
           {navLinks.map(link => (
             <Link key={link.path} to={link.path} className="text-gray-600 hover:text-primary transition-colors">
@@ -40,26 +41,71 @@ const Header = () => {
           </button>
         </nav>
 
-        <button className="lg:hidden p-2 text-gray-600" onClick={() => setIsMenuOpen(true)}>
-          <Menu className="w-7 h-7" />
+        {/* Mobile Toggle Button */}
+        <button 
+          className="lg:hidden p-2 text-gray-800 hover:bg-gray-100 rounded-xl transition-colors" 
+          onClick={() => setIsMenuOpen(true)}
+          aria-label="Open navigation menu"
+        >
+          <Menu className="w-8 h-8" />
         </button>
       </div>
 
-      <div className={`fixed inset-0 z-[60] transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out`}>
-        <div className="absolute inset-0 bg-black/50" onClick={() => setIsMenuOpen(false)} />
-        <div className="absolute right-0 top-0 h-full w-4/5 max-w-sm bg-white p-8 flex flex-col">
-          <div className="flex justify-between items-center mb-10">
-            <span className="text-xl font-bold text-primary">{BRAND_NAME}</span>
-            <button onClick={() => setIsMenuOpen(false)}><X className="w-6 h-6" /></button>
+      {/* Mobile Sidebar Navigation */}
+      <div className={`fixed inset-0 z-[100] transition-all duration-300 ${isMenuOpen ? 'visible' : 'invisible'}`}>
+        {/* Dark High-Contrast Backdrop Overlay */}
+        <div 
+          className={`absolute inset-0 bg-black/75 backdrop-blur-md transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} 
+          onClick={() => setIsMenuOpen(false)} 
+        />
+        
+        {/* Sidebar Panel - Solid Background for High Visibility */}
+        <div className={`absolute right-0 top-0 h-full w-[85%] max-w-sm bg-white shadow-2xl flex flex-col transform transition-transform duration-300 ease-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+          <div className="flex justify-between items-center p-6 border-b border-gray-100">
+            <div className="flex items-center gap-2">
+              <Leaf className="w-6 h-6 text-primary" />
+              <span className="text-xl font-bold text-gray-900 tracking-tight">{BRAND_NAME}</span>
+            </div>
+            <button 
+              onClick={() => setIsMenuOpen(false)}
+              className="p-2 text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
+            >
+              <X className="w-8 h-8" />
+            </button>
           </div>
-          <nav className="flex flex-col gap-6 text-lg font-medium">
+          
+          <nav className="flex flex-col p-6 gap-2">
             {navLinks.map(link => (
-              <Link key={link.path} to={link.path} onClick={() => setIsMenuOpen(false)} className="text-gray-800 hover:text-primary">
+              <Link 
+                key={link.path} 
+                to={link.path} 
+                onClick={() => setIsMenuOpen(false)} 
+                className="text-lg font-bold text-gray-800 hover:text-primary hover:bg-primary/5 px-4 py-4 rounded-2xl transition-all"
+              >
                 {link.name}
               </Link>
             ))}
-            <Link to="/admin/login" onClick={() => setIsMenuOpen(false)} className="text-gray-500 pt-4 border-t border-gray-100">Staff Login</Link>
+            <div className="my-4 border-t border-gray-100 pt-4">
+              <Link 
+                to="/admin/login" 
+                onClick={() => setIsMenuOpen(false)} 
+                className="flex items-center gap-3 text-gray-500 font-bold px-4 py-4 rounded-2xl hover:bg-gray-50 transition-all"
+              >
+                <LogIn className="w-5 h-5" />
+                Staff Portal Login
+              </Link>
+            </div>
           </nav>
+
+          <div className="mt-auto p-6 border-t border-gray-100 bg-gray-50">
+            <button 
+              onClick={() => { navigate('/presence'); setIsMenuOpen(false); }}
+              className="w-full bg-primary text-white py-4.5 rounded-2xl font-bold shadow-lg hover:bg-primary-dark transition-all flex items-center justify-center gap-2"
+            >
+              <Globe className="w-5 h-5" />
+              Global Presence
+            </button>
+          </div>
         </div>
       </div>
     </header>
@@ -127,7 +173,7 @@ export const PublicLayout = ({ children }: { children: React.ReactNode }) => {
         href={CONTACT_INFO.whatsappUrl} 
         target="_blank" 
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform"
+        className="fixed bottom-6 right-6 z-[60] bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center"
       >
         <MessageSquare className="w-6 h-6" />
       </a>
