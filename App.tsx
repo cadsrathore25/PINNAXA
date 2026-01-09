@@ -18,7 +18,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Contact = () => (
-  // Wrap contact page content in PublicLayout to fulfill children requirement
+  /* Fixed: Wrapped content inside PublicLayout tags */
   <PublicLayout>
     <div className="py-24 container mx-auto px-4 text-center">
       <h1 className="text-4xl font-bold mb-8">Contact Us</h1>
@@ -28,7 +28,7 @@ const Contact = () => (
 );
 
 const About = () => (
-  /* Wrap About page content in PublicLayout to satisfy ReactNode requirement */
+  /* Fixed: Wrapped content inside PublicLayout tags */
   <PublicLayout>
     <div className="py-24 container mx-auto px-4">
       <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center lg:text-left">About Our Journey</h1>
@@ -49,7 +49,7 @@ const About = () => (
 const App = () => (
   <Router>
     <Routes>
-      {/* Fixed: Components are correctly nested within PublicLayout to satisfy the children prop requirement */}
+      {/* Fixed: Wrapped route elements in Layout components as children */}
       <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
       <Route path="/about" element={<About />} />
       <Route path="/products" element={<PublicLayout><ProductsListing /></PublicLayout>} />

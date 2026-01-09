@@ -1,7 +1,8 @@
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, Leaf, Mail, Phone, MapPin, MessageSquare, Globe, LogIn } from 'lucide-react';
-import { BRAND_NAME, CONTACT_INFO, COMPANY_NAME } from '../constants';
+import { Menu, X, Mail, MapPin, MessageSquare, Globe, LogIn, Leaf } from 'lucide-react';
+import { BRAND_NAME, CONTACT_INFO, COMPANY_NAME, IMAGES } from '../constants';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,9 +19,9 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-[50] bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 group" onClick={() => setIsMenuOpen(false)}>
-          <div className="bg-primary p-1.5 rounded-lg group-hover:rotate-12 transition-transform">
-            <Leaf className="w-6 h-6 text-white" />
+        <Link to="/" className="flex items-center gap-3 group" onClick={() => setIsMenuOpen(false)}>
+          <div className="bg-primary p-2 rounded-xl text-white group-hover:rotate-12 transition-transform shadow-lg">
+            <Leaf className="w-6 h-6" />
           </div>
           <span className="text-2xl font-bold tracking-tight text-primary-dark">{BRAND_NAME}</span>
         </Link>
@@ -53,18 +54,16 @@ const Header = () => {
 
       {/* Mobile Sidebar Navigation */}
       <div className={`fixed inset-0 z-[100] transition-all duration-300 ${isMenuOpen ? 'visible' : 'invisible'}`}>
-        {/* Dark High-Contrast Backdrop Overlay */}
         <div 
           className={`absolute inset-0 bg-black/75 backdrop-blur-md transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} 
           onClick={() => setIsMenuOpen(false)} 
         />
         
-        {/* Sidebar Panel - Solid Background for High Visibility */}
         <div className={`absolute right-0 top-0 h-full w-[85%] max-w-sm bg-white shadow-2xl flex flex-col transform transition-transform duration-300 ease-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <div className="flex justify-between items-center p-6 border-b border-gray-100">
             <div className="flex items-center gap-2">
               <Leaf className="w-6 h-6 text-primary" />
-              <span className="text-xl font-bold text-gray-900 tracking-tight">{BRAND_NAME}</span>
+              <span className="text-xl font-bold text-primary-dark">{BRAND_NAME}</span>
             </div>
             <button 
               onClick={() => setIsMenuOpen(false)}
@@ -117,14 +116,12 @@ const Footer = () => {
     <footer className="bg-gray-900 text-white pt-16 pb-8">
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-center md:text-left">
         <div className="space-y-6">
-          <div className="flex items-center gap-2 justify-center md:justify-start">
-            <div className="bg-primary p-1.5 rounded-lg">
-              <Leaf className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-2xl font-bold text-white">{BRAND_NAME}</span>
+          <div className="flex items-center gap-3 justify-center md:justify-start">
+            <Leaf className="w-8 h-8 text-primary-light" />
+            <span className="text-2xl font-bold tracking-tight">{BRAND_NAME}</span>
           </div>
           <p className="text-gray-400 leading-relaxed max-w-xs mx-auto md:mx-0">
-            Pinnaxa Industries Pvt. Ltd. is India's leading agro-product sourcing partner, delivering excellence from farm to table.
+            {COMPANY_NAME} is India's leading agro-product sourcing partner, delivering excellence from farm to table.
           </p>
         </div>
 

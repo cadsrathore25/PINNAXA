@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Package, Users, MessageSquare, Edit3, Sparkles, LogOut, Leaf, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Package, Users, MessageSquare, Edit3, Sparkles, LogOut, Menu, X, Leaf } from 'lucide-react';
 import { BRAND_NAME } from '../constants';
 
 export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
@@ -15,7 +15,6 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   }, [navigate]);
 
   useEffect(() => {
-    // Close sidebar on route change for mobile
     setIsSidebarOpen(false);
   }, [location]);
 
@@ -37,11 +36,9 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="min-h-screen bg-gray-50 flex flex-col lg:flex-row">
       {/* Mobile Admin Header */}
       <div className="lg:hidden bg-gray-900 text-white p-4 flex items-center justify-between sticky top-0 z-50 shadow-md">
-        <div className="flex items-center gap-2">
-          <div className="bg-primary p-1 rounded-md">
-            <Leaf className="w-5 h-5 text-white" />
-          </div>
-          <span className="text-lg font-bold tracking-tight">{BRAND_NAME}</span>
+        <div className="flex items-center gap-3">
+          <Leaf className="w-6 h-6 text-primary-light" />
+          <span className="font-bold tracking-tight">{BRAND_NAME} Admin</span>
         </div>
         <button 
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -65,10 +62,8 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
-        <div className="hidden lg:flex items-center gap-2 mb-12">
-          <div className="bg-primary p-1.5 rounded-lg">
-            <Leaf className="w-6 h-6 text-white" />
-          </div>
+        <div className="hidden lg:flex items-center gap-3 mb-12">
+          <Leaf className="w-8 h-8 text-primary-light" />
           <span className="text-2xl font-bold tracking-tight">{BRAND_NAME}</span>
         </div>
 
@@ -83,7 +78,6 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                   : 'text-gray-400 hover:text-white hover:bg-gray-800'
               }`}
             >
-              {/* Fixed className error in cloneElement */}
               {React.cloneElement(item.icon as any, { className: 'w-5 h-5' })}
               {item.label}
             </Link>

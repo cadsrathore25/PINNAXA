@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Leaf, Lock, User } from 'lucide-react';
+import { Lock, User, Leaf } from 'lucide-react';
+import { BRAND_NAME } from '../constants';
 
 const AdminLogin = () => {
   const [username, setUsername] = useState('');
@@ -21,12 +22,12 @@ const AdminLogin = () => {
 
   return (
     <div className="min-h-screen bg-eggshell flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-[2rem] shadow-2xl p-10">
+      <div className="max-w-md w-full bg-white rounded-[2rem] shadow-2xl p-10 border border-gray-100">
         <div className="text-center mb-10">
-          <div className="bg-primary p-3 rounded-2xl inline-block mb-4 shadow-lg">
-            <Leaf className="w-8 h-8 text-white" />
+          <div className="bg-primary p-4 rounded-3xl text-white shadow-xl inline-block mb-6">
+            <Leaf className="w-10 h-10" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">Admin Portal</h1>
+          <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Admin Portal</h1>
           <p className="text-gray-500 mt-2">Sign in to manage Pinnaxa Industries</p>
         </div>
 
