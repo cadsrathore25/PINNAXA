@@ -17,8 +17,18 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   return isAuth ? <>{children}</> : <Navigate to="/admin/login" />;
 };
 
+const Contact = () => (
+  // Wrap contact page content in PublicLayout to fulfill children requirement
+  <PublicLayout>
+    <div className="py-24 container mx-auto px-4 text-center">
+      <h1 className="text-4xl font-bold mb-8">Contact Us</h1>
+      <p className="text-xl text-gray-600">Reach out for global agro-sourcing inquiries.</p>
+    </div>
+  </PublicLayout>
+);
+
 const About = () => (
-  /* Fix: Wrapped About page content correctly to satisfy children requirement */
+  /* Wrap About page content in PublicLayout to satisfy ReactNode requirement */
   <PublicLayout>
     <div className="py-24 container mx-auto px-4">
       <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center lg:text-left">About Our Journey</h1>
@@ -39,22 +49,18 @@ const About = () => (
 const App = () => (
   <Router>
     <Routes>
-      {/* Fix: Explicitly passing Home as children to PublicLayout to resolve Property 'children' is missing error */}
+      {/* Fixed: Components are correctly nested within PublicLayout to satisfy the children prop requirement */}
       <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
       <Route path="/about" element={<About />} />
-      {/* Fix: Explicitly passing ProductsListing as children to PublicLayout */}
       <Route path="/products" element={<PublicLayout><ProductsListing /></PublicLayout>} />
-      {/* Fix: Explicitly passing ProductDetail as children to PublicLayout */}
       <Route path="/products/:slug" element={<PublicLayout><ProductDetail /></PublicLayout>} />
-      {/* Fix: Explicitly passing Leadership as children to PublicLayout */}
       <Route path="/leadership" element={<PublicLayout><Leadership /></PublicLayout>} />
-      {/* Fix: Explicitly passing Presence as children to PublicLayout */}
       <Route path="/presence" element={<PublicLayout><Presence /></PublicLayout>} />
+      <Route path="/contact" element={<Contact />} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route 
         path="/admin/dashboard" 
         element={
-          /* Fix: Explicitly passing components as children to PrivateRoute and AdminLayout */
           <PrivateRoute>
             <AdminLayout>
               <AdminDashboard />
@@ -65,7 +71,6 @@ const App = () => (
       <Route 
         path="/admin/ai-summarizer" 
         element={
-          /* Fix: Explicitly passing components as children to PrivateRoute and AdminLayout */
           <PrivateRoute>
             <AdminLayout>
               <AdminAISummarizer />
@@ -76,7 +81,6 @@ const App = () => (
       <Route 
         path="/admin/promoters" 
         element={
-          /* Fix: Explicitly passing components as children to PrivateRoute and AdminLayout */
           <PrivateRoute>
             <AdminLayout>
               <AdminPromoters />
