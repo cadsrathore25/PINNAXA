@@ -6,13 +6,13 @@ import { IMAGES } from '../constants';
 
 const PRODUCTS = [
   { id: '1', name: 'Organic 1121 Basmati', category: 'Rice', slug: '1121-basmati', img: IMAGES.rice1121, desc: 'Supreme extra-long grain rice, aged naturally for peak aroma and zero chemical residue.' },
-  { id: '2', name: 'Pearl Millet (Bajra)', category: 'Mota Anaj', slug: 'pearl-millet', img: "https://images.unsplash.com/photo-1508013861974-9f6347163835?q=80&w=1000&auto=format&fit=crop", desc: 'Iron-rich ancient superfood, harvested from pesticide-free traditional drylands.' },
-  { id: '3', name: 'Kabuli Chickpeas', category: 'Pulses', slug: 'kabuli-chickpeas', img: "https://images.unsplash.com/photo-1515942400420-2b98fed1f515?q=80&w=1000&auto=format&fit=crop", desc: 'Export-grade large chickpeas with high protein retention and zero synthetic polish.' },
-  { id: '4', name: 'Healthy Mixed Grains', category: 'Superfoods', slug: 'mixed-grains', img: "https://images.unsplash.com/photo-1511690078903-71dad5a49fae?q=80&w=1000&auto=format&fit=crop", desc: 'A curated blend of nutrient-dense ancient grains for modern heart-healthy diets.' },
-  { id: '5', name: 'White Sorghum (Jowar)', category: 'Mota Anaj', slug: 'sorghum-jowar', img: "https://images.unsplash.com/photo-1474440692490-2e83af13a4ca?q=80&w=1000&auto=format&fit=crop", desc: 'Naturally gluten-free grain with high fiber content, grown in traditional organic clusters.' },
-  { id: '6', name: 'Split Red Lentils', category: 'Pulses', slug: 'red-lentils', img: "https://images.unsplash.com/photo-1515942400420-2b98fed1f515?q=80&w=1000&auto=format&fit=crop", desc: 'Highly digestible split pulses sourced from regions with minimal agrochemical footprint.' },
-  { id: '7', name: 'Finger Millet (Ragi)', category: 'Mota Anaj', slug: 'finger-millet', img: "https://images.unsplash.com/photo-1508013861974-9f6347163835?q=80&w=1000&auto=format&fit=crop", desc: 'Calcium powerhouse superfood. Sustainably sourced and processed without heat-damage.' },
-  { id: '8', name: 'Whole Green Moong', category: 'Pulses', slug: 'green-moong', img: "https://images.unsplash.com/photo-1515942400420-2b98fed1f515?q=80&w=1000&auto=format&fit=crop", desc: 'Nutrient-rich small beans harvested from healthy soils with zero residue traces.' },
+  { id: '2', name: 'Pearl Millet (Bajra)', category: 'Mota Anaj', slug: 'pearl-millet', img: IMAGES.bajra, desc: 'Iron-rich ancient superfood, harvested from pesticide-free traditional drylands.' },
+  { id: '3', name: 'Kabuli Chickpeas', category: 'Pulses', slug: 'kabuli-chickpeas', img: IMAGES.chickpeas, desc: 'Export-grade large chickpeas with high protein retention and zero synthetic polish.' },
+  { id: '4', name: 'Healthy Mixed Grains', category: 'Superfoods', slug: 'mixed-grains', img: IMAGES.mixedGrains, desc: 'A curated blend of nutrient-dense ancient grains for modern heart-healthy diets.' },
+  { id: '5', name: 'White Sorghum (Jowar)', category: 'Mota Anaj', slug: 'sorghum-jowar', img: IMAGES.jowar, desc: 'Naturally gluten-free grain with high fiber content, grown in traditional organic clusters.' },
+  { id: '6', name: 'Split Red Lentils', category: 'Pulses', slug: 'red-lentils', img: IMAGES.lentils, desc: 'Highly digestible split pulses sourced from regions with minimal agrochemical footprint.' },
+  { id: '7', name: 'Finger Millet (Ragi)', category: 'Mota Anaj', slug: 'finger-millet', img: IMAGES.ragi, desc: 'Calcium powerhouse superfood. Sustainably sourced and processed without heat-damage.' },
+  { id: '8', name: 'Whole Green Moong', category: 'Pulses', slug: 'green-moong', img: IMAGES.pulses, desc: 'Nutrient-rich small beans harvested from healthy soils with zero residue traces.' },
 ];
 
 const ProductsListing = () => {
@@ -43,7 +43,7 @@ const ProductsListing = () => {
       </section>
 
       {/* Filters - Modern & Sticky */}
-      <div className="sticky top-20 md:top-24 z-40 bg-white/95 backdrop-blur-xl border-b border-gray-100 shadow-xl">
+      <div className="sticky top-16 md:top-16 z-40 bg-white/95 backdrop-blur-xl border-b border-gray-100 shadow-xl">
         <div className="container mx-auto px-6 py-8 md:py-12 flex flex-col lg:flex-row gap-10 items-center justify-between">
           <div className="flex items-center gap-8 md:gap-16 overflow-x-auto pb-6 md:pb-0 w-full lg:w-auto scrollbar-hide">
              {categories.map(cat => (

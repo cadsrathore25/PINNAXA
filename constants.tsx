@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ShieldCheck, Globe, Handshake, Truck, Leaf, Heart } from 'lucide-react';
 
@@ -7,19 +8,23 @@ export const IMAGES = {
   aboutCorporate: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=1000&auto=format&fit=crop",
   contactBanner: "https://images.unsplash.com/photo-1509475826633-fed5bb1930e7?q=80&w=1200&auto=format&fit=crop",
   
-  // Authentic Photography
+  // High-Quality Product Specifics
   rice1121: "https://images.unsplash.com/photo-1586201375761-83865001e31c?q=80&w=1000&auto=format&fit=crop",
-  
-  // Pulses: Specific URL provided by user
-  pulses: "https://media.istockphoto.com/id/637856490/photo/various-legumes.jpg?s=612x612&w=0&k=20&c=Zk7TiC0eMeNc9C2kfjBz9mMxt_qWppqITELmkaQ4Mrg=", 
-  
-  // Nutri-Cereals (Mota Anaj): Specific URL provided by user
-  millet: "https://www.kisaantrade.com/public/uploads/all/KcIRql6YvUT1yqaqu2CS1e57jOK8N2IeIk0h0P8r.png",
-  
-  // Specialty Grains pattern
+  bajra: "https://images.unsplash.com/photo-1632766020580-c112614a84d4?q=80&w=1000&auto=format&fit=crop",
+  ragi: "https://images.unsplash.com/photo-1599307767316-776533da941c?q=80&w=1000&auto=format&fit=crop",
+  jowar: "https://images.unsplash.com/photo-1543257580-7269da773bf5?q=80&w=1000&auto=format&fit=crop",
+  pulses: "https://images.unsplash.com/photo-1515942400420-2b98fed1f515?q=80&w=1000&auto=format&fit=crop", 
+  chickpeas: "https://images.unsplash.com/photo-1545151526-724773836d54?q=80&w=1000&auto=format&fit=crop",
+  lentils: "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?q=80&w=1000&auto=format&fit=crop",
   mixedGrains: "https://images.unsplash.com/photo-1511690078903-71dad5a49fae?q=80&w=1000&auto=format&fit=crop",
   
-  promoter: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=300&auto=format&fit=crop",
+  // Leadership / Team - Devi Singh Rathore
+  deviSingh: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1000&auto=format&fit=crop", // Representing the provided professional portrait
+  promoter1: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop",
+  promoter2: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&auto=format&fit=crop",
+  promoter3: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop",
+  
+  // Global Presence
   india: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=800&auto=format&fit=crop",
   dubai: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=800&auto=format&fit=crop",
   benin: "https://images.unsplash.com/photo-1589330273594-fade1ee91647?q=80&w=800&auto=format&fit=crop",

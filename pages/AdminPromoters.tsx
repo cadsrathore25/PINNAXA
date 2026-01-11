@@ -1,20 +1,52 @@
 
-import React, { useState, useRef } from 'react';
-import { Edit3, Trash2, Camera, Save, X, PlusCircle, User, Briefcase, FileText } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Edit3, Trash2, Camera, Save, X, PlusCircle, User, Briefcase, FileText, RotateCcw } from 'lucide-react';
 import { IMAGES } from '../constants';
 import { Promoter } from '../types';
 
 const INITIAL_PROMOTERS: Promoter[] = [
-  { id: '1', name: 'Amit Sharma', designation: 'Managing Director', bio: 'With 15+ years in agro-exports, Amit leads the vision of Pinnaxa with a focus on global expansion.', image: IMAGES.promoter },
-  { id: '2', name: 'Sanjay Jain', designation: 'Director of Operations', bio: 'Sanjay oversees our supply chain and quality assurance protocols, ensuring farm-to-port excellence.', image: IMAGES.promoter },
-  { id: '3', name: 'Priya Mehra', designation: 'Chief Marketing Officer', bio: 'Priya builds our international brand presence and manages relationships with global distributors.', image: IMAGES.promoter },
+  { 
+    id: '1', 
+    name: 'Devi Singh Rathore', 
+    designation: 'Finance Director (Chartered Accountant)', 
+    bio: 'Indian Chartered Accountant with a decade of leadership across startups, listed firms, and manufacturing. Strategic head of Pinnaxa\'s operations.', 
+    image: IMAGES.deviSingh 
+  },
+  { 
+    id: '2', 
+    name: 'Amit Sharma', 
+    designation: 'Managing Director', 
+    bio: '15+ years in agro-exports, leading the vision of Pinnaxa with a focus on global expansion and organic development.', 
+    image: IMAGES.promoter1 
+  },
+  { 
+    id: '3', 
+    name: 'Sanjay Jain', 
+    designation: 'Director of Operations', 
+    bio: 'Oversees the global supply chain and quality assurance protocols, ensuring farm-to-port excellence.', 
+    image: IMAGES.promoter2 
+  },
 ];
 
 const AdminPromoters = () => {
-  const [promoters, setPromoters] = useState<Promoter[]>(INITIAL_PROMOTERS);
+  const [promoters, setPromoters] = useState<Promoter[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState<Promoter | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('pinnaxa_promoters');
+    if (saved) {
+      setPromoters(JSON.parse(saved));
+    } else {
+      setPromoters(INITIAL_PROMOTERS);
+    }
+  }, []);
+
+  const persistData = (updated: Promoter[]) => {
+    setPromoters(updated);
+    localStorage.setItem('pinnaxa_promoters', JSON.stringify(updated));
+  };
 
   const startEdit = (p: Promoter) => {
     setEditingId(p.id);
@@ -23,22 +55,32 @@ const AdminPromoters = () => {
 
   const handleSave = () => {
     if (formData) {
+      let updated: Promoter[];
       if (editingId === 'new') {
-        setPromoters([...promoters, { ...formData, id: Date.now().toString() }]);
+        updated = [...promoters, { ...formData, id: Date.now().toString() }];
       } else {
-        setPromoters(promoters.map(p => p.id === formData.id ? formData : p));
+        updated = promoters.map(p => p.id === formData.id ? formData : p);
       }
+      persistData(updated);
       setEditingId(null);
       setFormData(null);
-      alert('Promoter profile updated successfully!');
+      alert('Promoter profile and photo updated successfully!');
     }
   };
 
   const handleDelete = (id: string) => {
     if (confirm('Are you sure you want to remove this promoter?')) {
-      setPromoters(promoters.filter(p => p.id !== id));
+      const updated = promoters.filter(p => p.id !== id);
+      persistData(updated);
     }
   };
+
+  const resetToDefault = () => {
+    if (confirm('Reset all leadership profiles to default factory settings?')) {
+      localStorage.removeItem('pinnaxa_promoters');
+      setPromoters(INITIAL_PROMOTERS);
+    }
+  }
 
   const handleAddNew = () => {
     const newP: Promoter = {
@@ -55,6 +97,11 @@ const AdminPromoters = () => {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && formData) {
+      // Basic check for image size (limit to 2MB for localStorage)
+      if (file.size > 2 * 1024 * 1024) {
+        alert("Image is too large. Please use a file smaller than 2MB.");
+        return;
+      }
       const reader = new FileReader();
       reader.onloadend = () => {
         setFormData({ ...formData, image: reader.result as string });
@@ -67,16 +114,25 @@ const AdminPromoters = () => {
     <div className="space-y-10 pb-20">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Key People Management</h1>
-          <p className="text-gray-500">Update profiles, biographies, and photos of company leadership.</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Leadership Management</h1>
+          <p className="text-gray-500">Update photos, roles, and biographies of the executive team.</p>
         </div>
-        <button 
-          onClick={handleAddNew}
-          className="bg-primary text-white px-6 py-3 rounded-xl font-bold shadow-lg flex items-center gap-2 hover:bg-primary-dark transition-all"
-        >
-          <PlusCircle className="w-5 h-5" />
-          Add Leader
-        </button>
+        <div className="flex gap-3">
+          <button 
+            onClick={resetToDefault}
+            className="bg-gray-100 text-gray-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-gray-200 transition-all"
+          >
+            <RotateCcw className="w-5 h-5" />
+            Reset Defaults
+          </button>
+          <button 
+            onClick={handleAddNew}
+            className="bg-primary text-white px-6 py-3 rounded-xl font-bold shadow-lg flex items-center gap-2 hover:bg-primary-dark transition-all"
+          >
+            <PlusCircle className="w-5 h-5" />
+            Add Leader
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-6">
@@ -95,23 +151,23 @@ const AdminPromoters = () => {
                    </button>
                 </div>
                 <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleImageUpload} />
-                <p className="text-xs text-gray-400 text-center">Click image to upload photo</p>
+                <p className="text-xs text-gray-400 text-center font-bold">CLICK PHOTO TO UPLOAD</p>
               </div>
               <div className="flex-grow space-y-4">
                  <input 
-                  className="w-full p-4 bg-white border border-gray-100 rounded-xl focus:ring-2 ring-primary outline-none"
+                  className="w-full p-4 bg-white border border-gray-100 rounded-xl focus:ring-2 ring-primary outline-none font-bold"
                   placeholder="Full Name"
                   value={formData.name}
                   onChange={e => setFormData({ ...formData, name: e.target.value })}
                  />
                  <input 
-                  className="w-full p-4 bg-white border border-gray-100 rounded-xl focus:ring-2 ring-primary outline-none"
+                  className="w-full p-4 bg-white border border-gray-100 rounded-xl focus:ring-2 ring-primary outline-none font-bold"
                   placeholder="Designation"
                   value={formData.designation}
                   onChange={e => setFormData({ ...formData, designation: e.target.value })}
                  />
                  <textarea 
-                  className="w-full p-4 bg-white border border-gray-100 rounded-xl focus:ring-2 ring-primary outline-none h-32"
+                  className="w-full p-4 bg-white border border-gray-100 rounded-xl focus:ring-2 ring-primary outline-none h-32 leading-relaxed"
                   placeholder="Short Biography"
                   value={formData.bio}
                   onChange={e => setFormData({ ...formData, bio: e.target.value })}
@@ -130,7 +186,7 @@ const AdminPromoters = () => {
             {editingId === p.id && formData ? (
               <div className="flex flex-col lg:flex-row gap-10">
                 <div className="flex flex-col items-center gap-4 shrink-0">
-                  <div className="w-48 h-48 rounded-[2rem] overflow-hidden shadow-xl border-4 border-white relative group">
+                  <div className="w-56 h-56 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white relative group">
                     <img src={formData.image} alt={p.name} className="w-full h-full object-cover" />
                     <button 
                       onClick={() => fileInputRef.current?.click()}
@@ -140,7 +196,7 @@ const AdminPromoters = () => {
                     </button>
                   </div>
                   <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleImageUpload} />
-                  <p className="text-xs text-primary font-bold">Update Profile Photo</p>
+                  <p className="text-xs text-primary font-black tracking-widest uppercase">Update Portrait</p>
                 </div>
                 <div className="flex-grow space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -168,11 +224,11 @@ const AdminPromoters = () => {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-gray-400 uppercase ml-1">Bio Description</label>
+                    <label className="text-xs font-bold text-gray-400 uppercase ml-1">Professional Bio</label>
                     <div className="relative">
                       <FileText className="absolute left-4 top-4 text-gray-300 w-5 h-5" />
                       <textarea 
-                        className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 ring-primary outline-none h-32 leading-relaxed"
+                        className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 ring-primary outline-none h-32 leading-relaxed font-medium"
                         value={formData.bio}
                         onChange={e => setFormData({ ...formData, bio: e.target.value })}
                       />
@@ -184,7 +240,7 @@ const AdminPromoters = () => {
                       className="flex-1 bg-primary text-white py-5 rounded-2xl font-bold shadow-lg hover:bg-primary-dark transition-all flex items-center justify-center gap-3"
                     >
                       <Save className="w-6 h-6" />
-                      Save Changes
+                      Save Profile & Image
                     </button>
                     <button 
                       onClick={() => setEditingId(null)}

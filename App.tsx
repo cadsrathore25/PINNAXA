@@ -89,7 +89,7 @@ const AboutPage = () => (
       <div className="container mx-auto px-6">
         <h2 className="text-primary font-black uppercase tracking-widest text-xs mb-4">Our Origin</h2>
         <h1 className="text-4xl md:text-7xl font-black tracking-tighter mb-6">India's Natural Legacy.</h1>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-xl text-gray-600 max-3-3xl mx-auto leading-relaxed">
           Sourcing the purest Basmati and Nutri-Cereals with traditional wisdom and modern quality standards.
         </p>
       </div>
@@ -100,19 +100,18 @@ const AboutPage = () => (
 const App = () => (
   <Router>
     <Routes>
-      {/* Fix: Wrapped children components within Layout tags to satisfy TypeScript React.ReactNode requirements */}
-      <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
-      <Route path="/about" element={<PublicLayout><AboutPage /></PublicLayout>} />
-      <Route path="/products" element={<PublicLayout><ProductsListing /></PublicLayout>} />
-      <Route path="/products/:slug" element={<PublicLayout><ProductDetail /></PublicLayout>} />
-      <Route path="/leadership" element={<PublicLayout><Leadership /></PublicLayout>} />
-      <Route path="/presence" element={<PublicLayout><Presence /></PublicLayout>} />
-      <Route path="/contact" element={<PublicLayout><ContactPage /></PublicLayout>} />
+      <Route path="/" element={<PublicLayout children={<Home />} />} />
+      <Route path="/about" element={<PublicLayout children={<AboutPage />} />} />
+      <Route path="/products" element={<PublicLayout children={<ProductsListing />} />} />
+      <Route path="/products/:slug" element={<PublicLayout children={<ProductDetail />} />} />
+      <Route path="/leadership" element={<PublicLayout children={<Leadership />} />} />
+      <Route path="/presence" element={<PublicLayout children={<Presence />} />} />
+      <Route path="/contact" element={<PublicLayout children={<ContactPage />} />} />
       
       <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/admin/dashboard" element={<PrivateRoute><AdminLayout><AdminDashboard /></AdminLayout></PrivateRoute>} />
-      <Route path="/admin/ai-summarizer" element={<PrivateRoute><AdminLayout><AdminAISummarizer /></AdminLayout></PrivateRoute>} />
-      <Route path="/admin/promoters" element={<PrivateRoute><AdminLayout><AdminPromoters /></AdminLayout></PrivateRoute>} />
+      <Route path="/admin/dashboard" element={<PrivateRoute children={<AdminLayout children={<AdminDashboard />} />} />} />
+      <Route path="/admin/ai-summarizer" element={<PrivateRoute children={<AdminLayout children={<AdminAISummarizer />} />} />} />
+      <Route path="/admin/promoters" element={<PrivateRoute children={<AdminLayout children={<AdminPromoters />} />} />} />
       
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

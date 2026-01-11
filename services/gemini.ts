@@ -2,6 +2,7 @@
 import { GoogleGenAI } from "@google/genai";
 
 // Vercel and most modern hosts inject environment variables into process.env
+// The API_KEY must be obtained exclusively from process.env.API_KEY.
 const API_KEY = process.env.API_KEY;
 
 export async function generateTeaser(text: string): Promise<string> {
@@ -11,20 +12,18 @@ export async function generateTeaser(text: string): Promise<string> {
   }
 
   try {
-    // Correct initialization using named parameter object
+    // Correct initialization: always use new GoogleGenAI({ apiKey: process.env.API_KEY });
     const ai = new GoogleGenAI({ apiKey: API_KEY });
+    
+    // Using ai.models.generateContent directly with model name and prompt
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
-      contents: [{ 
-        parts: [{ 
-          text: `You are a professional marketing copywriter for Pinnaxa Industries. 
-          Summarize the following product/company details into a high-converting, 
-          engaging 20-word teaser for a website hero section: ${text}` 
-        }] 
-      }],
+      contents: `You are a professional marketing copywriter for Pinnaxa Industries. 
+      Summarize the following product/company details into a high-converting, 
+      engaging 20-word teaser for a website hero section: ${text}`,
     });
 
-    // Accessing .text property directly as per SDK guidelines
+    // Extracting text output from GenerateContentResponse using the .text property
     return response.text?.trim() || "Quality assurance in every grain.";
   } catch (error) {
     console.error("Gemini AI Error:", error);

@@ -15,7 +15,8 @@ const Home = () => {
     },
     { 
       name: "Nutri-Cereals (Mota Anaj)", 
-      img: IMAGES.millet, 
+      // Using IMAGES.mixedGrains as IMAGES.millet does not exist
+      img: IMAGES.mixedGrains, 
       tag: "ANCIENT SUPERFOODS",
       desc: "Bajra, Jowar & Ragi. Grains with the world's lowest agrochemical usage, sourced from traditional Indian drylands."
     },
@@ -161,7 +162,8 @@ const Home = () => {
                  </div>
                  <div className="relative">
                     <img 
-                      src={IMAGES.millet} 
+                      // Using IMAGES.bajra as IMAGES.millet does not exist
+                      src={IMAGES.bajra} 
                       alt="Nutri-Cereals Variety" 
                       className="relative rounded-xl shadow-2xl object-cover aspect-square w-full max-w-sm mx-auto" 
                     />
