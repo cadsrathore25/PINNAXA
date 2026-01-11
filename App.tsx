@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { PublicLayout } from './components/Layout';
@@ -17,46 +18,42 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   return isAuth ? <>{children}</> : <Navigate to="/admin/login" />;
 };
 
-const Contact = () => (
-  /* Fixed: Wrapped content inside PublicLayout tags */
-  <PublicLayout>
-    <div className="py-24 container mx-auto px-4 text-center">
-      <h1 className="text-4xl font-bold mb-8">Contact Us</h1>
-      <p className="text-xl text-gray-600">Reach out for global agro-sourcing inquiries.</p>
-    </div>
-  </PublicLayout>
+// Fixed: Correcting functional component to just return content as it's used inside Route element
+const ContactContent = () => (
+  <div className="py-24 container mx-auto px-4 text-center">
+    <h1 className="text-4xl font-bold mb-8">Contact Us</h1>
+    <p className="text-xl text-gray-600">Reach out for global agro-sourcing inquiries.</p>
+  </div>
 );
 
-const About = () => (
-  /* Fixed: Wrapped content inside PublicLayout tags */
-  <PublicLayout>
-    <div className="py-24 container mx-auto px-4">
-      <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center lg:text-left">About Our Journey</h1>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <div className="space-y-6 text-lg text-gray-600 leading-relaxed text-center lg:text-left">
-          <p>Founded with a passion for excellence, Pinnaxa Industries Pvt. Ltd. has emerged as a powerhouse in Indian agro-product sourcing.</p>
-          <div className="bg-primary/5 p-8 rounded-3xl border border-primary/10">
-            <h3 className="text-primary font-bold mb-4 uppercase tracking-widest text-sm">Our Mission</h3>
-            <p className="text-gray-900 font-medium text-xl italic">"To deliver premium, ethically sourced agro-products to global tables."</p>
-          </div>
+// Fixed: Correcting functional component to just return content as it's used inside Route element
+const AboutContent = () => (
+  <div className="py-24 container mx-auto px-4">
+    <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center lg:text-left">About Our Journey</h1>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="space-y-6 text-lg text-gray-600 leading-relaxed text-center lg:text-left">
+        <p>Founded with a passion for excellence, Pinnaxa Industries Pvt. Ltd. has emerged as a powerhouse in Indian agro-product sourcing.</p>
+        <div className="bg-primary/5 p-8 rounded-3xl border border-primary/10">
+          <h3 className="text-primary font-bold mb-4 uppercase tracking-widest text-sm">Our Mission</h3>
+          <p className="text-gray-900 font-medium text-xl italic">"To deliver premium, ethically sourced agro-products to global tables."</p>
         </div>
-        <div><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop" className="rounded-[3rem] shadow-2xl w-full object-cover h-[500px]" alt="Corporate" /></div>
       </div>
+      <div><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop" className="rounded-[3rem] shadow-2xl w-full object-cover h-[500px]" alt="Corporate" /></div>
     </div>
-  </PublicLayout>
+  </div>
 );
 
 const App = () => (
   <Router>
     <Routes>
-      {/* Fixed: Wrapped route elements in Layout components as children */}
+      {/* Fixed: Correctly wrapping component content within PublicLayout to provide children prop */}
       <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
-      <Route path="/about" element={<About />} />
+      <Route path="/about" element={<PublicLayout><AboutContent /></PublicLayout>} />
       <Route path="/products" element={<PublicLayout><ProductsListing /></PublicLayout>} />
       <Route path="/products/:slug" element={<PublicLayout><ProductDetail /></PublicLayout>} />
       <Route path="/leadership" element={<PublicLayout><Leadership /></PublicLayout>} />
       <Route path="/presence" element={<PublicLayout><Presence /></PublicLayout>} />
-      <Route path="/contact" element={<Contact />} />
+      <Route path="/contact" element={<PublicLayout><ContactContent /></PublicLayout>} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route 
         path="/admin/dashboard" 

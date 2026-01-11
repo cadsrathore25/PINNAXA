@@ -1,28 +1,28 @@
 
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, CheckCircle, Package, MapPin, ClipboardList, Send } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Package, MapPin, ClipboardList, Send, Leaf } from 'lucide-react';
 import { IMAGES } from '../constants';
 
 const ProductDetail = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
 
-  // Mock data fetching based on slug
+  // Expanded mock logic for organic focus
   const product = {
     name: slug?.replace('-', ' ').toUpperCase() || 'Product Name',
-    category: 'Premium Grains',
+    category: 'Organic Certified',
     image: IMAGES.rice1121,
-    description: `Our ${slug} is sourced directly from the fertile plains of North India. Known for its distinct aroma and superior grain length, it undergoes multiple quality checks to ensure zero impurities.`,
+    description: `Our ${slug} is sourced directly from certified organic clusters and traditional farming belts in India. Grown with zero-to-minimal agrochemical use, this crop retains its natural minerals and authentic flavor profile, providing superior health benefits compared to mass-market alternatives.`,
     specifications: [
-      'Moisture: 12% Max',
-      'Average Grain Length: 8.35mm',
-      'Purity: 95%',
-      'Damaged/Discolored: 0.5% Max',
-      'Broken: 1% Max'
+      'Residue Level: NDT (Non-Detectable)',
+      'Organic Certification: NPOP / USDA Equivalent',
+      'Purity: 99% Min',
+      'Processing: Natural / Chemical-Free',
+      'Nutritional Content: High Mineral Retention'
     ],
-    packaging: 'Available in 5kg, 10kg, 25kg, and 50kg PP/Jute/Non-Woven bags.',
-    origin: 'Haryana / Punjab / Rajasthan, India'
+    packaging: 'Eco-friendly PP/Jute bags available in 1kg to 50kg variants.',
+    origin: 'Traditional Organic Belts of India (Rajasthan / MP / Himalayan Foothills)'
   };
 
   return (
@@ -37,14 +37,16 @@ const ProductDetail = () => {
         </button>
 
         <div className="flex flex-col lg:flex-row gap-16">
-          {/* Image Gallery Placeholder */}
           <div className="lg:w-1/2">
-            <div className="rounded-[2rem] overflow-hidden shadow-2xl">
+            <div className="rounded-[2rem] overflow-hidden shadow-2xl relative">
               <img src={product.image} alt={product.name} className="w-full aspect-square object-cover" />
+              <div className="absolute top-8 left-8 bg-white/95 backdrop-blur-md px-6 py-3 rounded-2xl shadow-xl flex items-center gap-3">
+                 <Leaf className="w-6 h-6 text-primary" />
+                 <span className="font-bold text-sm text-gray-900">RESIDUE-FREE</span>
+              </div>
             </div>
           </div>
 
-          {/* Details */}
           <div className="lg:w-1/2 space-y-10">
             <div>
               <span className="text-primary font-bold uppercase tracking-widest text-sm">{product.category}</span>
@@ -59,7 +61,7 @@ const ProductDetail = () => {
               <div className="space-y-4">
                 <div className="flex items-center gap-3 text-primary font-bold">
                   <ClipboardList className="w-6 h-6" />
-                  <h3>Specifications</h3>
+                  <h3>Organic Standards</h3>
                 </div>
                 <ul className="space-y-2">
                   {product.specifications.map((spec, i) => (
@@ -95,7 +97,7 @@ const ProductDetail = () => {
                 onClick={() => navigate('/contact')}
                 className="w-full md:w-auto bg-primary text-white px-12 py-5 rounded-2xl font-bold hover:bg-primary-dark shadow-xl transition-all flex items-center justify-center gap-3"
               >
-                Inquire About This Product
+                Inquire for Organic Export
                 <Send className="w-5 h-5" />
               </button>
             </div>

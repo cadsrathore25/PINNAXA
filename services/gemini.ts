@@ -1,3 +1,4 @@
+
 import { GoogleGenAI } from "@google/genai";
 
 // Security check for production environments
@@ -15,6 +16,7 @@ export async function generateTeaser(text: string): Promise<string> {
     const ai = new GoogleGenAI({ apiKey: API_KEY });
     
     // Using gemini-3-flash-preview for text summarization tasks
+    // Fixed: calling generateContent directly on ai.models
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: [{ 
@@ -24,10 +26,6 @@ export async function generateTeaser(text: string): Promise<string> {
           engaging 20-word teaser for a website hero section: ${text}` 
         }] 
       }],
-      config: {
-        temperature: 0.7,
-        topP: 0.9,
-      }
     });
 
     // Correct text extraction: response.text is a property, not a method
