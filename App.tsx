@@ -100,6 +100,7 @@ const AboutPage = () => (
 const App = () => (
   <Router>
     <Routes>
+      {/* Fix: Wrapped children components within Layout tags to satisfy TypeScript React.ReactNode requirements */}
       <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
       <Route path="/about" element={<PublicLayout><AboutPage /></PublicLayout>} />
       <Route path="/products" element={<PublicLayout><ProductsListing /></PublicLayout>} />
